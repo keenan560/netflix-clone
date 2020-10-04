@@ -11,14 +11,12 @@ function Row({ title, fetchUrl, isLargeRow }) {
     // if [], run once when the row loads, and don't run again
     async function fetchData() {
       const request = await axios.get(fetchUrl);
-      console.log(request);
+
       setMovies(request.data.results);
       return request;
     }
     fetchData();
   }, [fetchUrl]);
-
-  console.log(movies);
 
   return (
     <div className="row">
@@ -28,8 +26,10 @@ function Row({ title, fetchUrl, isLargeRow }) {
         {movies.map((movie) => (
           <img
             key={movie.id}
-            className="row__poster"
-            src={`${baseUrl}${isLargeRow? movie.poster_path: movie.backdrop_path}`}
+            className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+            src={`${baseUrl}${
+              isLargeRow ? movie.poster_path : movie.backdrop_path
+            }`}
             alt={movie.name}
           />
         ))}
